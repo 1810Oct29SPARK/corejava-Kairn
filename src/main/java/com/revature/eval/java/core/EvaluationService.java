@@ -1,6 +1,7 @@
 package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -250,8 +251,26 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Map<String, Integer> wordCount(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		
+		// HashMap to store count result
+		Map<String, Integer> wordsCounter = new HashMap<String, Integer>();
+		
+		// Split the string into separate words with legal delimiter cluster pattern
+		String[] wordArray = string.split("[\\.\\-\\s_,]+");
+		
+		// Count the words
+		for (String s: wordArray) {
+			// Create an entry for the first occurrence
+			Integer currentCount = wordsCounter.putIfAbsent(s, 1);
+			
+			// Increment for subsequent occurrences
+			if (currentCount != null) {
+				wordsCounter.replace(s, currentCount + 1);
+			}
+		}
+		
+		return wordsCounter;
+		
 	}
 
 	/**
