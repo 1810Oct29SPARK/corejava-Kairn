@@ -15,7 +15,7 @@ public class EvaluationService {
 	 * for better code readability.
 	 */
 	
-	MyUtils mu = new MyUtils();
+	static MyUtils mu = new MyUtils();
 
 	/**
 	 * 1. Without using the StringBuilder or StringBuffer class, write a method that
@@ -519,15 +519,37 @@ public class EvaluationService {
 	 */
 	static class RotationalCipher {
 		private int key;
+		
+		// Instantiate a MyUtils object
+		static MyUtils mu = new MyUtils();
 
 		public RotationalCipher(int key) {
 			super();
-			this.key = key;
+			// Check for illegal key
+			if (key < 0) {
+				throw new IllegalArgumentException();
+			}
+			// Use modular operator to get rid of unnecessary rotations
+			this.key = key % 26;
 		}
 
 		public String rotate(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			
+			// Optimize for 0 rotation by returning the string immediately
+			if (this.key == 0) {
+				return string;
+			}
+			
+			// StringBuilder to store the cipher string
+			StringBuilder cipher = new StringBuilder("");
+			
+			// Transform the string
+			for (int i = 0; i < string.length(); ++i) {
+				cipher.append(mu.toCaesarChar(string.charAt(i), this.key));
+			}
+			
+			return new String(cipher);
+			
 		}
 
 	}
@@ -596,6 +618,9 @@ public class EvaluationService {
 	 */
 	static class AtbashCipher {
 
+		// Instantiate a MyUtils object
+		static MyUtils mu = new MyUtils();
+
 		/**
 		 * Question 13
 		 * 
@@ -603,8 +628,34 @@ public class EvaluationService {
 		 * @return
 		 */
 		public static String encode(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			
+			// StringBuilder to store the Atbash cipher
+			StringBuilder cipher = new StringBuilder("");
+			
+			// Length of character groups
+			final int groupLen = 5;
+			int charCounter = 0;
+			
+			// Remove punctuation (non-alphanumeric characters excluding '-' and '_')
+			// Transform to lowercase
+			string = string.replaceAll("[\\W&&[^-]]", "").toLowerCase();
+			
+			// Load the transformed chars into StringBuilder
+			for (int i = 0; i < string.length(); ++i) {
+				// Add a white space per 5 characters before adding new char
+				if (charCounter == groupLen) {
+					cipher.append(" ");
+					// Reset counter
+					charCounter = 0;
+				}
+				// Append a new char
+				cipher.append(mu.toAtbash(string.charAt(i)));
+				// Increment counter
+				++charCounter;
+			}
+			
+			return new String(cipher);
+			
 		}
 
 		/**
@@ -614,9 +665,22 @@ public class EvaluationService {
 		 * @return
 		 */
 		public static String decode(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			
+			// StringBuilder to hold decoded cipher
+			StringBuilder decipher = new StringBuilder("");
+			
+			// Remove white spaces
+			string = string.replaceAll(" ", "");
+			
+			// Load decoded chars into StringBuilder
+			for (int i = 0; i < string.length(); ++i) {
+				decipher.append(mu.toAtbash(string.charAt(i)));
+			}
+			
+			return new String(decipher);
+			
 		}
+		
 	}
 
 	/**

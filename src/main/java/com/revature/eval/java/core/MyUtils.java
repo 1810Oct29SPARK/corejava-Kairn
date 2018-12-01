@@ -4,6 +4,10 @@ public class MyUtils {
 
 	/*==========Constants==========*/
 	
+	// Alphabet characters
+	public final String UPPER_CASE_ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	public final String LOWER_CASE_ALPHABET = "abcdefghijklmnopqrstuvwxyz";
+	
 	/*==========Simple Methods==========*/
 	
 	/**
@@ -112,6 +116,49 @@ public class MyUtils {
 		}
 		// Must be a prime if for loop exits
 		return true;
+		
+	}
+	
+	/**
+	 * Transform a single char into a Caesar cipher char using a key
+	 * Non-alphabet chars are returned as themselves
+	 */
+	public char toCaesarChar(char c, int key) {
+		
+		// Transform an UPPERCASE letter
+		if (this.UPPER_CASE_ALPHABET.indexOf(c) != -1) {
+			// Shift the char by computing a new index
+			int newIndex = (this.UPPER_CASE_ALPHABET.indexOf(c) + key) % 26;
+			return this.UPPER_CASE_ALPHABET.charAt(newIndex);
+		}
+		// Do the same for a lowercase letter
+		else if (this.LOWER_CASE_ALPHABET.indexOf(c) != -1) {
+			int newIndex = (this.LOWER_CASE_ALPHABET.indexOf(c) + key) % 26;
+			return this.LOWER_CASE_ALPHABET.charAt(newIndex);
+		}
+		// Return non-alphabet char as is
+		else {
+			return c;
+		}
+		
+	}
+	
+	/**
+	 * Transform a single char (in lowercase) into its Atbash counterpart
+	 * This method works for both encoding and decoding
+	 * Non-alphabet chars are returned as themselves
+	 */
+	public char toAtbash(char c) {
+		
+		// Alphabet characters
+		if (this.LOWER_CASE_ALPHABET.indexOf(c) != -1) {
+			int newIndex = 25 - this.LOWER_CASE_ALPHABET.indexOf(c);
+			return this.LOWER_CASE_ALPHABET.charAt(newIndex);
+		}
+		// Non-alphabet characters
+		else {
+			return c;
+		}
 		
 	}
 	
