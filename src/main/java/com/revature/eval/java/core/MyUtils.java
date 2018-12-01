@@ -22,9 +22,21 @@ public class MyUtils {
 	/**
 	 * Check if a character is a vowel (in lowercase)
 	 */
-	
 	public boolean isVowel(char c) {
 		return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u';
+	}
+	
+	/**
+	 * Perform a Luhn double on a single-digit integer
+	 * Assume input is between 0 and 9
+	 */
+	public int doubleLuhn(int number) {
+		if (number * 2 > 9) {
+			return number * 2 - 9;
+		}
+		else {
+			return number * 2;
+		}
 	}
 	
 	/*==========Complex Methods==========*/

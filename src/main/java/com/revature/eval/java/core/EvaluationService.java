@@ -419,10 +419,8 @@ public class EvaluationService {
 	 */
 	public boolean isArmstrongNumber(int input) {
 		
-		// Check for negative numbers (taking their absolute values)
-		if (input < 0) {
-			input = input * -1;
-		}
+		// Take the absolute value of input so negative numbers can be checked
+		input = Math.abs(input);
 		
 		// Load the input number into a StringBuilder
 		StringBuilder numberString = (new StringBuilder("")).append(input);
@@ -819,8 +817,36 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int getSumOfMultiples(int i, int[] set) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		
+		// Check for negative target number
+		if (i < 0) {
+			throw new IllegalArgumentException();
+		}
+		
+		// Check for zeros in the divider set
+		for (int n: set) {
+			if (n == 0) {
+				throw new IllegalArgumentException();
+			}
+		}
+		
+		// Sum of all multiples
+		int sum = 0;
+		
+		// Loop through all integers from 1 to the target number i
+		for (int n = 1; n < i; ++n) {
+			// Loop through the divider set
+			for (int m: set) {
+				if (n % m == 0) {
+					// found a multiple
+					sum += n;
+					break;
+				}
+			}
+		}
+		
+		return sum;
+		
 	}
 
 	/**
@@ -860,8 +886,42 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isLuhnValid(String string) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		
+		// Replace non-digit characters (except for white spaces) to underscores for validation purpose
+		string = string.replaceAll("[\\D&&[^\\s]]", "_");
+		
+		// Check for illegal characters
+		if (string.contains("_")) {
+			return false;
+		}
+		
+		// Strip everything except for digits from the string
+		string = string.replaceAll("\\D", "");
+		
+		// Check length
+		if (string.length() < 2) {
+			return false;
+		}
+		
+		// Luhn sum
+		int sum = 0;
+		
+		// Sentinel to signal whether a digit should be doubled
+		boolean needToDouble = false;
+		
+		// Calculate the Luhn sum
+		for (int i = string.length() - 1; i >= 0; --i) {
+			if (needToDouble) {
+				sum += mu.doubleLuhn(Integer.parseInt(string.substring(i, i + 1)));
+			}
+			else {
+				sum += Integer.parseInt(string.substring(i, i + 1));
+			}
+			needToDouble = !needToDouble;
+		}
+		
+		return sum % 10 == 0;
+		
 	}
 
 	/**
