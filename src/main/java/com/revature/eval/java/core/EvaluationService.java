@@ -652,7 +652,7 @@ public class EvaluationService {
 					charCounter = 0;
 				}
 				// Append a new char
-				cipher.append(mu.toAtbash(string.charAt(i)));
+				cipher.append(mu.toAtbashChar(string.charAt(i)));
 				// Increment counter
 				++charCounter;
 			}
@@ -677,7 +677,7 @@ public class EvaluationService {
 			
 			// Load decoded chars into StringBuilder
 			for (int i = 0; i < string.length(); ++i) {
-				decipher.append(mu.toAtbash(string.charAt(i)));
+				decipher.append(mu.toAtbashChar(string.charAt(i)));
 			}
 			
 			return new String(decipher);
@@ -952,8 +952,70 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int solveWordProblem(String string) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		
+		// Operation keywords
+		final String ADD = "plus";
+		final String SUB = "minus";
+		final String MUL = "multiplied";
+		final String DIV = "divided";
+		
+		// Chosen operation
+		String operation = null;
+		
+		// Look for a keyword
+		if (string.contains(ADD)) {
+			operation = ADD;
+		}
+		else if (string.contains(SUB)) {
+			operation = SUB;
+		}
+		else if (string.contains(MUL)) {
+			operation = MUL;
+		}
+		else if (string.contains(DIV)) {
+			operation = DIV;
+		}
+		else {
+			// No keyword found
+			throw new IllegalArgumentException();
+		}
+		
+		// Replace the keyword with an underscore as a number separator
+		string = string.replace(operation, "_");
+		
+		// Strip all non-digit characters except for '_' and '-';
+		string = string.replaceAll("[\\D&&[^\\-_]]", "");
+		
+		// Extract the two numbers from the string and declare answer variable
+		double num1 = Double.parseDouble((string.split("_"))[0]);
+		double num2 = Double.parseDouble((string.split("_"))[1]);
+		double answer;
+		
+		// Perform operation
+		switch (operation) {
+		case ADD:
+			answer = num1 + num2;
+			break;
+		case SUB:
+			answer = num1 - num2;
+			break;
+		case MUL:
+			answer = num1 * num2;
+			break;
+		case DIV:
+			// Check for zero denominator
+			if (num2 == 0) {
+				throw new ArithmeticException();
+			}
+			answer = num1 / num2;
+			break;
+		default:
+			// Something went wrong
+			throw new IllegalStateException();
+		}
+		
+		return (int)Math.floor(answer);
+		
 	}
 
 }

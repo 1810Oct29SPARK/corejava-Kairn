@@ -169,7 +169,7 @@ public class MyUtils {
 	 * This method works for both encoding and decoding
 	 * Non-alphabet chars are returned as themselves
 	 */
-	public char toAtbash(char c) {
+	public char toAtbashChar(char c) {
 		
 		// Alphabet characters
 		if (this.LOWER_CASE_ALPHABET.indexOf(c) != -1) {
