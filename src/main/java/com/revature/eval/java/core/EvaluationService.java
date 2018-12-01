@@ -39,8 +39,20 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String acronym(String phrase) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		
+		// Empty StringBuilder to store the acronym
+		StringBuilder acronymString = new StringBuilder("");
+		
+		// Split the phrase (in UPPERCASE) into words using non-word character cluster pattern
+		String[] wordArray = phrase.toUpperCase().split("[\\W]+");
+		
+		// Load the first character of each word into the StringBuilder
+		for (String s: wordArray) {
+			acronymString.append(s.charAt(0));
+		}
+		
+		return new String(acronymString);
+		
 	}
 
 	/**
