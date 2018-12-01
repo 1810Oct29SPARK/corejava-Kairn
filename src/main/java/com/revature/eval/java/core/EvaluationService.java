@@ -1,6 +1,7 @@
 package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -412,8 +413,33 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isArmstrongNumber(int input) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		
+		// Check for negative numbers (taking their absolute values)
+		if (input < 0) {
+			input = input * -1;
+		}
+		
+		// Load the input number into a StringBuilder
+		StringBuilder numberString = (new StringBuilder("")).append(input);
+		
+		// Get the number of digits of the input number
+		int len = numberString.length();
+		
+		// Armstrong sum
+		int sum = 0;
+		
+		// Calculate the sum
+		for (int i = 0; i < len; ++i) {
+			sum += Math.pow(Integer.parseInt(numberString.substring(i, i + 1)), len);
+		}
+		
+		if (sum == input) {
+			return true;
+		}
+		else {
+			return false;
+		}
+		
 	}
 
 	/**
@@ -427,8 +453,42 @@ public class EvaluationService {
 	 * @return
 	 */
 	public List<Long> calculatePrimeFactorsOf(long l) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		
+		// Check for invalid input number
+		if (l < 2) {
+			throw new IllegalArgumentException();
+		}
+		
+		// List to store prime factors
+		List<Long> primeList = new ArrayList<Long>();
+		
+		// Sentinel to control the while loop
+		boolean notPrime = true;
+		
+		// Keep dividing the input number by primes starting from 2 until it becomes a prime itself
+		// All denominator are guaranteed to be primes, or they will be factored before they
+		// are reached. e.g. 6 will not never become a denominator since 2 and 3 come before it.
+		while (notPrime) {
+			for (long i = 2; i <= l; ++i) {
+				if (l % i == 0) {
+					// Found a prime factor
+					primeList.add(i);
+					// l becomes a prime if i reaches it
+					if (l == i) {
+						notPrime = false;
+					}
+					else {
+						// Take this prime factor out of l
+						l = l / i;
+					}
+					// Start the for loop again (or not if l is prime)
+					break;
+				}
+			}
+		}
+		
+		return primeList;
+		
 	}
 
 	/**
