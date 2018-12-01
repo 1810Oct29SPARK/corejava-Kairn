@@ -134,8 +134,49 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int getScrabbleScore(String string) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		
+		// Score strings
+		final String onePoint = "AEIOULNRST";
+		final String twoPoint = "DG";
+		final String threePoint = "BCMP";
+		final String fourPoint = "FHVWY";
+		final String fivePoint = "K";
+		final String eightPoint = "JX";
+		final String tenPoint = "QZ";
+		
+		// Scrabble score
+		int score = 0;
+		
+		// Convert to UPPERCASE
+		string = string.toUpperCase();
+		
+		// Calculate the score
+		for (int i = 0; i < string.length(); ++i) {
+			if (onePoint.contains(string.substring(i, i + 1))) {
+				score += 1;
+			}
+			else if (twoPoint.contains(string.substring(i, i + 1))) {
+				score += 2;
+			}
+			else if (threePoint.contains(string.substring(i, i + 1))) {
+				score += 3;
+			}
+			else if (fourPoint.contains(string.substring(i, i + 1))) {
+				score += 4;
+			}
+			else if (fivePoint.contains(string.substring(i, i + 1))) {
+				score += 5;
+			}
+			else if (eightPoint.contains(string.substring(i, i + 1))) {
+				score += 8;
+			}
+			else if (tenPoint.contains(string.substring(i, i + 1))) {
+				score += 10;
+			}
+		}
+		
+		return score;
+		
 	}
 
 	/**
@@ -170,8 +211,33 @@ public class EvaluationService {
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
 	public String cleanPhoneNumber(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		
+		// Remove legal non-digit characters i.e. '(', ')', '-', '.', ',', ' '
+		string = string.replaceAll("[\\(\\)\\-\\., ]", "");
+		
+		// Replace non-digit characters with white spaces
+		string = string.replaceAll("[\\D]", " ");
+		
+		// Check for illegal characters (white spaces)
+		if (string.contains(" ")) {
+			throw new IllegalArgumentException();
+		}
+		
+		// Remove white spaces
+		string.replaceAll(" ", "");
+		
+		// Validate number
+		if (!mu.isValidNANP(string)) {
+			throw new IllegalArgumentException();
+		}
+		
+		// Trim extra country code
+		if (string.length() == 11) {
+			string = string.substring(1);
+		}
+		
+		return string;
+		
 	}
 
 	/**
