@@ -5,6 +5,15 @@ import java.util.List;
 import java.util.Map;
 
 public class EvaluationService {
+	
+	/**
+	 * Create MyUtils object for accessing utility methods.
+	 * 
+	 * These utility methods are written to improve code base organization and
+	 * for better code readability.
+	 */
+	
+	MyUtils mu = new MyUtils();
 
 	/**
 	 * 1. Without using the StringBuilder or StringBuffer class, write a method that
@@ -84,18 +93,15 @@ public class EvaluationService {
 		}
 
 		public boolean isEquilateral() {
-			// TODO Write an implementation for this method declaration
-			return false;
+			return (this.sideOne == this.sideTwo) && (this.sideTwo == this.sideThree);
 		}
 
 		public boolean isIsosceles() {
-			// TODO Write an implementation for this method declaration
-			return false;
+			return (this.sideOne == this.sideTwo) || (this.sideTwo == this.sideThree) || (this.sideOne == this.sideThree);
 		}
 
 		public boolean isScalene() {
-			// TODO Write an implementation for this method declaration
-			return false;
+			return !this.isIsosceles();
 		}
 
 	}
