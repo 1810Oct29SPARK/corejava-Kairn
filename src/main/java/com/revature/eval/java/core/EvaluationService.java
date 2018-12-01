@@ -215,8 +215,41 @@ public class EvaluationService {
 		private List<T> sortedList;
 
 		public int indexOf(T t) {
-			// TODO Write an implementation for this method declaration
-			return 0;
+			
+			// Check for empty list
+			if (this.sortedList.size() == 0) {
+				return -1;
+			}
+			
+			// Search range variables
+			int begin = 0;
+			int end = this.sortedList.size();
+			int middle;
+			
+			// If search list is not empty
+			while (begin != end) {
+				// Find the element in the middle
+				middle = (begin + end) / 2;
+				T searchElement = this.sortedList.get(middle);
+				
+				// Elements of type T must be comparable
+				if (((Comparable)t).compareTo(searchElement) == 0) {
+					// Element is found
+					return middle;
+				}
+				else if (((Comparable)t).compareTo(searchElement) > 0) {
+					// Try search the right section of the list
+					begin = middle + 1;
+				}
+				else if (((Comparable)t).compareTo(searchElement) < 0) {
+					// Try search the left section of the list
+					end = middle;
+				}
+			}
+			
+			// No such element exist
+			return -1;
+			
 		}
 
 		public BinarySearch(List<T> sortedList) {
