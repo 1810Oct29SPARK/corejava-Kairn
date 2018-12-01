@@ -382,8 +382,18 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String toPigLatin(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		
+		// Split the string into words if delimiters exist
+		String[] wordArray = string.split("[\\.\\-\\s_,]+");
+		
+		// Translate the words into Pig Latin using a utility method
+		for (int i = 0; i < wordArray.length; ++i) {
+			wordArray[i] = mu.englishWordToPigLatin(wordArray[i]);
+		}
+		
+		// Join the words with a white space in between each two
+		return String.join(" ", wordArray);
+		
 	}
 
 	/**
