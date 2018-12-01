@@ -8,6 +8,15 @@ public class MyUtils {
 	public final String UPPER_CASE_ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	public final String LOWER_CASE_ALPHABET = "abcdefghijklmnopqrstuvwxyz";
 	
+	// ISBN digit values
+	// Index of the digit represents its value
+	public final String ISBN_DIGITS = "0123456789";
+	public final String ISBN_CHECK_DIGIT = "0123456789X";
+	
+	// Gigasecond
+	public final long GIGA_SECOND = 1000000000L;
+	
+	
 	/*==========Simple Methods==========*/
 	
 	/**

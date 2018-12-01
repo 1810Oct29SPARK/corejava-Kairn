@@ -1,10 +1,15 @@
 package com.revature.eval.java.core;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class EvaluationService {
 	
@@ -706,8 +711,41 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isValidIsbn(String string) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		
+		// Remove the legal dash characters and any white space
+		string = string.replaceAll("[\\-\\s]", "");
+		
+		// Check length
+		if (string.length() != 10) {
+			return false;
+		}
+		
+		// ISBN sum
+		int sum = 0;
+		
+		// Validate the first 9 digits and calculate their sum
+		for (int i = 0; i < string.length() - 1; ++i) {
+			if (mu.ISBN_DIGITS.indexOf(string.charAt(i)) == -1) {
+				// Illegal digit
+				return false;
+			}
+			else {
+				// Add the digit's value to the sum
+				sum += mu.ISBN_DIGITS.indexOf(string.charAt(i)) * (10 - i);
+			}
+		}
+		
+		// Validate the check digit
+		if (mu.ISBN_CHECK_DIGIT.indexOf(string.charAt(9)) == -1) {
+			return false;
+		}
+		else {
+			sum += mu.ISBN_CHECK_DIGIT.indexOf(string.charAt(9));
+		}
+		
+		// Validate the sum
+		return (sum % 11 == 0);
+		
 	}
 
 	/**
@@ -724,8 +762,21 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isPangram(String string) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		
+		// Use a HashSet to store all letters that appear in the string
+		Set<Character> charSet = new HashSet<Character>();
+		
+		// Refine the string by transforming it to lowercase and removing non-alphabet characters
+		string = string.toLowerCase().replaceAll("[^a-z]", "");
+		
+		// Load all chars into HashSet
+		for (int i = 0; i < string.length(); ++i) {
+			charSet.add(string.charAt(i));
+		}
+		
+		// Check whether the HashSet has 26 letters
+		return charSet.size() == 26;
+		
 	}
 
 	/**
@@ -737,8 +788,21 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Temporal getGigasecondDate(Temporal given) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		
+		// When only the date is given
+		if (given instanceof LocalDate) {
+			// Assume the default time of 00:00
+			return LocalDateTime.of((LocalDate)given, LocalTime.of(0, 0)).plusSeconds(mu.GIGA_SECOND);
+		}
+		// When both date and time are given
+		else if (given instanceof LocalDateTime) {
+			return ((LocalDateTime)given).plusSeconds(mu.GIGA_SECOND);
+		}
+		// Invalid input
+		else {
+			throw new IllegalArgumentException();
+		}
+		
 	}
 
 	/**
