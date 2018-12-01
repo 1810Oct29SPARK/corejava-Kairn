@@ -94,4 +94,25 @@ public class MyUtils {
 		
 	}
 	
+	/**
+	 * Check if an integer (long) is a prime number
+	 */
+	public boolean isPrime(long number) {
+		
+		// Check for invalid input
+		if (number < 2) {
+			throw new IllegalArgumentException();
+		}
+		
+		for (long i = 2; i < number; ++i) {
+			if (number % i == 0) {
+				// Not a prime
+				return false;
+			}
+		}
+		// Must be a prime if for loop exits
+		return true;
+		
+	}
+	
 }

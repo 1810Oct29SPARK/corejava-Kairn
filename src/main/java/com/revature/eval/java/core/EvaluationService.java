@@ -467,7 +467,7 @@ public class EvaluationService {
 		
 		// Keep dividing the input number by primes starting from 2 until it becomes a prime itself
 		// All denominator are guaranteed to be primes, or they will be factored before they
-		// are reached. e.g. 6 will not never become a denominator since 2 and 3 come before it.
+		// are reached. e.g. 6 will never become a denominator since 2 and 3 come before it.
 		while (notPrime) {
 			for (long i = 2; i <= l; ++i) {
 				if (l % i == 0) {
@@ -545,8 +545,29 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int calculateNthPrime(int i) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		
+		// Check for invalid input
+		if (i < 1) {
+			throw new IllegalArgumentException();
+		}
+		
+		// Count how many prime numbers have been found
+		int counter = 0;
+		
+		// Cycle through all numbers greater than 1 until enough primes are found and return
+		for (int n = 2; n <= Integer.MAX_VALUE; ++n) {
+			if (mu.isPrime(n)) {
+				++counter;
+				if (counter == i) {
+					// Found the nth prime
+					return n;
+				}
+			}
+		}
+		
+		// Something went wrong (i is too large for ith prime to be store in an int)
+		return -1;
+		
 	}
 
 	/**
