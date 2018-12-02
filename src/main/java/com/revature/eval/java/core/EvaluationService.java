@@ -350,7 +350,7 @@ public class EvaluationService {
 				}
 			}
 			
-			// No such element exist
+			// Element not found
 			return -1;
 			
 		}
@@ -640,7 +640,7 @@ public class EvaluationService {
 			int charCounter = 0;
 			
 			// Remove punctuation (non-alphanumeric characters excluding '-' and '_')
-			// Transform to lowercase
+			// Convert to lowercase
 			string = string.replaceAll("[\\W&&[^-]]", "").toLowerCase();
 			
 			// Load the transformed chars into StringBuilder
@@ -764,7 +764,7 @@ public class EvaluationService {
 		// Use a HashSet to store all letters that appear in the string
 		Set<Character> charSet = new HashSet<Character>();
 		
-		// Refine the string by transforming it to lowercase and removing non-alphabet characters
+		// Refine the string by converting it to lowercase and removing non-alphabet characters
 		string = string.toLowerCase().replaceAll("[^a-z]", "");
 		
 		// Load all chars into HashSet
@@ -890,7 +890,7 @@ public class EvaluationService {
 		// Replace non-digit characters (except for white spaces) to underscores for validation purpose
 		string = string.replaceAll("[\\D&&[^\\s]]", "_");
 		
-		// Check for illegal characters
+		// Check for illegal characters ('_')
 		if (string.contains("_")) {
 			return false;
 		}
@@ -1014,7 +1014,7 @@ public class EvaluationService {
 			throw new IllegalStateException();
 		}
 		
-		return (int)Math.floor(answer);
+		return (int)Math.round(answer);
 		
 	}
 
