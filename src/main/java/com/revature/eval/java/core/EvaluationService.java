@@ -576,16 +576,20 @@ public class EvaluationService {
 			throw new IllegalArgumentException();
 		}
 		
-		// Count how many prime numbers have been found
-		int counter = 0;
+		// Store all primes that have been found and put in the first prime 2
+		List<Integer> foundPrimes = new ArrayList<Integer>();
+		foundPrimes.add(2);
 		
-		// Cycle through all numbers greater than 1 until enough primes are found and return
-		for (int n = 2; n <= Integer.MAX_VALUE; ++n) {
-			if (mu.isPrime(n)) {
-				++counter;
-				if (counter == i) {
-					// Found the nth prime
-					return n;
+		// Cycle through all numbers greater than 2 until enough primes are found and return
+		// Skip even numbers for optimization
+		for (int n = 3; n <= Integer.MAX_VALUE; n+=2) {
+			if (foundPrimes.size() == i) {
+				// Found enough primes
+				return foundPrimes.get(i - 1);
+			}
+			else {
+				if (mu.isPrime(n, foundPrimes)) {
+					foundPrimes.add(n);
 				}
 			}
 		}
