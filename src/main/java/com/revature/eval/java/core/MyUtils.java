@@ -118,6 +118,8 @@ public class MyUtils {
 
 	/**
 	 * Check if an integer (long) is a prime number
+	 * A brute force search with bad performance
+	 * An overloaded version below can be used in certain situations
 	 */
 	public boolean isPrime(long number) {
 
@@ -133,7 +135,7 @@ public class MyUtils {
 			}
 		}
 		
-		// Must be a prime if for loop exits
+		// Must be a prime if loop exits
 		return true;
 
 	}
@@ -154,9 +156,9 @@ public class MyUtils {
 			return true;
 		}
 		
-		// No need to check against non-primes
-		for (Integer i: primeList) {
-			if (number % i == 0) {
+		// No need to check against non-primes (also skip 2)
+		for (int i = 1; i < primeList.size(); ++i) {
+			if (number % primeList.get(i) == 0) {
 				return false;
 			}
 		}
